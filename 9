@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+
+bool transition(int state, char input) {
+    switch (state) {
+        case 0:
+            return (input == 'o') ? true : false;
+        case 1:
+            return (input == '1') ? true : false;
+        default:
+            return false;
+    }
+}
+
+
+bool simulateNFA(char *input) {
+    int currentState = 0;
+    int i = 0;
+    while (input[i] != '\0') {
+        char symbol = input[i];
+        if (!transition(currentState, symbol)) {
+            return false;
+        }
+        currentState = 1; 
+        i++;
+    }
+    return (currentState == 1); 
+}
+
+int main() {
+    char input[100];
+    printf("Enter a string: ");
+    scanf("%s", input);
+
+    if (simulateNFA(input)) {
+        printf("The string \"%s\" is accepted by the NFA.\n", input);
+    } else {
+        printf("The string \"%s\" is not accepted by the NFA.\n", input);
+    }
+
+    return 0;
+}
