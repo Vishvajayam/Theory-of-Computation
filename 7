@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+
+bool isS(char *input, int *index);
+bool isA(char *input, int *index);
+
+
+bool belongsToLanguage(char *input) {
+    int index = 0;
+    return isS(input, &index) && input[index] == '\0'; 
+}
+
+
+bool isS(char *input, int *index) {
+    if (isA(input, index) && input[*index] == '1') {
+        (*index)++;
+        if (input[*index] == '0' && isA(input, index)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isA(char *input, int *index) {
+    if (input[*index] == '0' || input[*index] == '1') {
+        (*index)++;
+        return isA(input, index);
+    } else {
+        return true; 
+    }
+}
+
+int main() {
+    char input[100];
+    printf("Enter a string: ");
+    scanf("%s", input);
+
+    if (belongsToLanguage(input)) {
+        printf("The string \"%s\" belongs to the language.\n", input);
+    } else {
+        printf("The string \"%s\" does not belong to the language.\n", input);
+    }
+
+    return 0;
+}
